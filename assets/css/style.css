@@ -2,6 +2,11 @@ html, body {
     height: 100%;
 }
 
+body {
+    background-image: url(../images/gravel.png);
+    background-color: grey;
+}
+
 #content-container {
     height: 100%;
 }
@@ -9,4 +14,28 @@ html, body {
 #add-train-card {
     margin-top: 30px;
     margin-bottom: 30px;
+    border: 2px solid #214282;
+}
+
+#train-schedule-card {
+    border: 2px solid #214282;
+}
+
+#jumbo {
+    background-color: #214282;
+    color: #D9E6FF;
+}
+
+#submit-button {
+    background-color: #214282;
+    color: #D9E6FF;
+}
+
+#submit-button:hover {
+    background-color: #546A97;
+}
+
+.card-header {
+    background-color: #214282;
+    color: #D9E6FF;
 }

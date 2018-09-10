@@ -1,5 +1,5 @@
 // Initialize Firebase
-var config = {
+const config = {
     apiKey: "AIzaSyBFJGryuBgQJbDvpz1zUa2rHanCbKda7pw",
     authDomain: "trainscheduler-d760f.firebaseapp.com",
     databaseURL: "https://trainscheduler-d760f.firebaseio.com",
@@ -9,33 +9,32 @@ var config = {
   };
   firebase.initializeApp(config);
 
-var trainScheduler = {
+const trainScheduler = {
     database: firebase.database(),
     addTrain: function(event) {
         event.preventDefault();
-        var trainName = $('#train-name').val().trim();
-        var destination = $('#destination').val().trim();
-        var frequencyMin = $('#frequency').val().trim();
-        var trainTime = $('#train-time').val().trim();
+        const trainName = $('#train-name').val().trim();
+        const destination = $('#destination').val().trim();
+        const frequencyMin = $('#frequency').val().trim();
+        const trainTime = $('#train-time').val().trim();
 
         this.database.ref().push({
             trainName: trainName,
             destination: destination,
             frequencyMin: frequencyMin,
             trainTime: trainTime
-        }).then(function(data) {
-            console.log(data);
         });
+        $('#train-name, #destination, #frequency, #train-time').val('');
     },
     minutesTillTrain: function(firstTrainTime, frequency) {
-        let formattedTime = moment(firstTrainTime, 'HH:mm').subtract(1, 'day');
-        let diffTime = moment().diff(moment(formattedTime), 'minutes');
-        let timeRemainder = diffTime % frequency;
-        var minutesTillTrain = frequency - timeRemainder;
+        const formattedTime = moment(firstTrainTime, 'HH:mm').subtract(1, 'day');
+        const diffTime = moment().diff(moment(formattedTime), 'minutes');
+        const timeRemainder = diffTime % frequency;
+        const minutesTillTrain = frequency - timeRemainder;
         return(minutesTillTrain);
     },
     nextTrainTime: function(minutesTillTrain) {
-        var nextTrain = moment().add(minutesTillTrain, 'minutes');
+        const nextTrain = moment().add(minutesTillTrain, 'minutes');
         return(nextTrain);
     }
 };
@@ -47,10 +46,10 @@ $(document).ready(function() {
     trainScheduler.database.ref().on("child_added", function(childSnapshot) {
         console.log(childSnapshot.val());
 
-        let minutesTill = trainScheduler.minutesTillTrain(childSnapshot.val().trainTime, childSnapshot.val().frequencyMin);
-        let nextTrain = trainScheduler.nextTrainTime(minutesTill);
+        const minutesTill = trainScheduler.minutesTillTrain(childSnapshot.val().trainTime, childSnapshot.val().frequencyMin);
+        const nextTrain = trainScheduler.nextTrainTime(minutesTill);
 
-        let newRow = $('<tr>')
+        const newRow = $('<tr>')
         newRow.append(
             [$('<td>').text(childSnapshot.val().trainName),
             $('<td>').text(childSnapshot.val().destination),
